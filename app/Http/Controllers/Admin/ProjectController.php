@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Project;
+use App\Models\Type;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
-
 
 class ProjectController extends Controller
 {
@@ -30,7 +30,8 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view('admin.projects.create');
+        $types = Type::all();
+        return view('admin.projects.create', compact('types'));
     }
 
     /**
@@ -47,7 +48,8 @@ class ProjectController extends Controller
                 'name' => 'required|min:5|max:150|unique:projects,name',
                 'client_name' => 'min:5|max:150',
                 'summary' => 'nullable|min:10',
-                'cover_image' => 'nullable|image|max:256'
+                'cover_image' => 'nullable|image|max:256',
+                'type_id' => 'nullable|exists:types,id',
             ]
         );
 
@@ -88,7 +90,8 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        return view('admin.projects.edit', compact('project'));
+        $types = Type::all();
+        return view('admin.projects.edit', compact('project', 'types'));
     }
 
     /**
@@ -111,6 +114,7 @@ class ProjectController extends Controller
                 'client_name' => 'min:5|max:150',
                 'summary' => 'nullable|min:10',
                 'cover_image' => 'nullable|image|max:256',
+                'type_id' => 'nullable|exists:types,id',
             ]
         );
 

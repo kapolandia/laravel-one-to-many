@@ -35,6 +35,15 @@
       <input type="text" class="form-control" id="exampleInputPassword1" name="client_name" value="{{$project->client_name}}">
     </div>
     <div class="mb-3">
+      <label for="type" class="form-label">Project Type</label>
+      <select class="form-select" id="type" name="type_id">
+        <option selected disabled>Choose a type</option>
+        @foreach ($types as $type)
+          <option value="{{ $type->id }}" >{{$type->name}}</option>
+        @endforeach
+      </select>
+    </div>
+    <div class="mb-3">
         <label for="exampleInputPassword2" class="form-label">Summary</label>
         <textarea type="text" class="form-control" id="exampleInputPassword2" name="summary" >{{$project->summary}}</textarea>
       </div>
